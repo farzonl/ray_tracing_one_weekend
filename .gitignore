@@ -1,0 +1,6 @@
+.DS_Store
+*.ppm
+*.dll
+*.pdb
+csharp/*/bin/
+csharp/*/obj/
