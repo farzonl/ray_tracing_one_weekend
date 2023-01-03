@@ -4,3 +4,5 @@
 *.pdb
 csharp/*/bin/
 csharp/*/obj/
+csharp/*.vs/
+csharp/TestResults/

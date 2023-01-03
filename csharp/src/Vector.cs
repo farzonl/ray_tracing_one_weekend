@@ -33,13 +33,13 @@ public class Vec3<T> where T : INumber<T> {
      public T this[int i]
    {
       get { 
-        if (i > 2) {
+        if (i > 2 || i < 0) {
             throw new ArgumentOutOfRangeException(nameof(i), "index for three items cannot be greater than two.");
         }
         return arr[i]; 
       }
       set { 
-        if (i > 2) {
+        if (i > 2 || i < 0) {
             throw new ArgumentOutOfRangeException(nameof(i), "index for three items cannot be greater than two.");
         }
         arr[i] = value; 

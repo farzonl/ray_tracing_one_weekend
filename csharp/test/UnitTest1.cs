@@ -23,6 +23,33 @@ public class Tests
         Assert.That(a.z, Is.EqualTo(3));
 
     }
+
+    [Test]
+    public void TestVectorSet()
+    {
+        Vec3<float> a = new Vec3<float>(0, 0, 0);
+        a.x = 1;
+        a.y = 2;
+        a.z = 3;
+        Assert.That(a.x, Is.EqualTo(1));
+        Assert.That(a.y, Is.EqualTo(2));
+        Assert.That(a.z, Is.EqualTo(3));
+        a[0] = 2;
+        a[1] = 3;
+        a[2] = 1;
+        Assert.That(a.x, Is.EqualTo(2));
+        Assert.That(a.y, Is.EqualTo(3));
+        Assert.That(a.z, Is.EqualTo(1));
+
+        a.r = 1;
+        a.g = 2;
+        a.b = 3;
+        Assert.That(a.x, Is.EqualTo(1));
+        Assert.That(a.y, Is.EqualTo(2));
+        Assert.That(a.z, Is.EqualTo(3));
+
+    }
+
     [Test]
     public void TestVectorAdd()
     {
@@ -33,7 +60,21 @@ public class Tests
         Assert.That(c.y, Is.EqualTo(2));
         Assert.That(c.z, Is.EqualTo(2));
     }
+
     [Test]
+    public void TestBoundsCheckForVector()
+    {
+        Vec3<float> a = new Vec3<float>(1, 1, 1);
+        // get using a delegate
+        Assert.Throws<ArgumentOutOfRangeException>(() => { var b = a[-1]; });
+        Assert.Throws<ArgumentOutOfRangeException>(() => { var b = a[3]; });
+
+        // set using a delegate
+        Assert.Throws<ArgumentOutOfRangeException>(() => { a[-1] = 1.0f; });
+        Assert.Throws<ArgumentOutOfRangeException>(() => { a[3] = 1.0f; });
+    }
+
+        [Test]
     public void TestVectorAddEqual()
     {
         Vec3<float> a = new Vec3<float>(1,1,1);
