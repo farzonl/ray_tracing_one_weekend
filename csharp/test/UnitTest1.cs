@@ -1,4 +1,4 @@
-using raytracing;
+using raytracing.DataStructures;
 
 namespace raytracing_test;
 
