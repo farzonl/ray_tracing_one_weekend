@@ -88,7 +88,7 @@ namespace raytracing
                 return this / this.length();
             }
 
-            public static Vec3<T> Zero() { return new Vec3<T>(T.Zero, T.Zero, T.Zero); }
+            public static Vec3<T> Zero() => new Vec3<T>(T.Zero, T.Zero, T.Zero);
 
             public static double Pow(T n, double p) => Math.Pow((double)new decimal((float)(object)n), p);
 
@@ -119,20 +119,22 @@ namespace raytracing
 
             public static Vec3<T> operator /(Vec3<T> a, T n) => new Vec3<T>(a.x / n, a.y / n, a.z / n);
 
-            public static T dot(Vec3<T> a, Vec3<T> b)
-            {
+            public static T dot(Vec3<T> a, Vec3<T> b) {
                 return a.arr[0] * b.arr[0] + a.arr[1] * b.arr[1] + a.arr[2] * b.arr[2];
             }
 
-            public T dot(Vec3<T> a)
-            {
-                return Vec3<T>.dot(this, a);
+            public T dot(Vec3<T> a) => Vec3<T>.dot(this, a);
+
+            public T dot() => Vec3<T>.dot(this, this);
+
+            public static Vec3<T> cross(Vec3<T> a, Vec3<T> b) {
+                return Vec3<T>.genVector(a.arr[1] * b.arr[2] - a.arr[2] * b.arr[1],
+                                         -(a.arr[0] * b.arr[2] - a.arr[2] * b.arr[0]),
+                                         a.arr[0] * b.arr[1] - a.arr[1] * b.arr[0]);
             }
 
-            public T dot()
-            {
-                return Vec3<T>.dot(this, this);
-            }
+            public Vec3<T> cross(Vec3<T> a) => Vec3<T>.cross(this, a);
+
         }
     }
 }
