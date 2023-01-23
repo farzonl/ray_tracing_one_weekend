@@ -68,9 +68,9 @@ namespace raytracing
                 this.z = z;
             }
 
-            public Vec3(T a) : this(a,a,a)
+            public Vec3(T a) : this(a, a, a)
             {
-               
+
             }
 
             public static Vec3<T> genVector(T x, T y, T z)
@@ -90,10 +90,17 @@ namespace raytracing
 
             public static Vec3<T> Zero() { return new Vec3<T>(T.Zero, T.Zero, T.Zero); }
 
-            public static double Pow(T n, double p) => Math.Pow((double)(object)n, p);
+            public static double Pow(T n, double p) => Math.Pow((double)new decimal((float)(object)n), p);
 
-            public T length() => (T)(object)Math.Sqrt(Pow(x, 2) + Pow(y, 2) + Pow(z, 2));
 
+            public T length() {
+                double len = Math.Sqrt((Pow(x, 2) + Pow(y, 2) + Pow(z, 2)));
+                Type t = typeof(T);
+                if(t == typeof(float) || t == typeof(int)){
+                    return (T)(object)Convert.ToSingle(len);
+                }
+                return (T)(object)len; 
+            }
             public static Vec3<T> operator -(Vec3<T> a) => new Vec3<T>(-a.x, -a.y, -a.z);
 
             public static Vec3<T> operator +(Vec3<T> a, Vec3<T> b)
@@ -111,6 +118,21 @@ namespace raytracing
             public static Vec3<T> operator *(Vec3<T> a, T n) => new Vec3<T>(a.x * n, a.y * n, a.z * n);
 
             public static Vec3<T> operator /(Vec3<T> a, T n) => new Vec3<T>(a.x / n, a.y / n, a.z / n);
+
+            public static T dot(Vec3<T> a, Vec3<T> b)
+            {
+                return a.arr[0] * b.arr[0] + a.arr[1] * b.arr[1] + a.arr[2] * b.arr[2];
+            }
+
+            public T dot(Vec3<T> a)
+            {
+                return Vec3<T>.dot(this, a);
+            }
+
+            public T dot()
+            {
+                return Vec3<T>.dot(this, this);
+            }
         }
     }
 }
