@@ -1,4 +1,21 @@
 
+# Raytracing in C#
+
+![](pics/result.png)
+
+### Dot Net Build Project 
+```powershell
+dotnet build
+```
+### Dot Net Test Project
+```powershell
+dotnet test
+```
+### Dot Net Run Project
+```powershell
+ dotnet run --project .\src\raytracing.csproj > result.ppm
+```
+
 ## Dot Net Project Setup
 ```bash
 dotnet new sln --name "raytracing"
@@ -9,6 +26,3 @@ dotnet sln add test/raytracing_test.csproj
 cd test
 dotnet add reference ../src/raytracing.csproj
 ```
-
-### Dot Net Project Build
-`dotnet build`
