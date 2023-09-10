@@ -1,5 +1,5 @@
 using System.Numerics;
-using raytracing.DataStructures;
+using raytracing.Raycast;
 
 namespace raytracing.Extentions
 {

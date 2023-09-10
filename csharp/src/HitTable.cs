@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+using raytracing.DataStructures;
 
-namespace raytracing.DataStructures
+
+namespace raytracing.Raycast
 {
     public abstract class HitTable<T> where T : INumber<T>
     {

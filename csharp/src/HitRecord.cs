@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Numerics;
+using raytracing.DataStructures;
 
-namespace raytracing.DataStructures
+namespace raytracing.Raycast
 {
     public struct HitRecord<V> where V : INumber<V>
     {
