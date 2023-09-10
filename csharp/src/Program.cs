@@ -15,18 +15,46 @@ namespace raytracing
         {
             HitRecord<float> rec = default;
             if(world.Hit(r,0.0f,float.MaxValue, ref rec)) {
-                return (rec.Normal + 1.0f) * 0.5f;
+                //return (rec.Normal + 1.0f) * 0.5f;
+                 Vec3<float> target = rec.P + rec.Normal + SphereRandom();
+                 return color(new Ray<float>(rec.P, target - rec.P), world) * 0.5f;
             }
 
             Vec3<float> unitDirection = r.direction().unitVector();
             float t = 0.5f * unitDirection.y + 1.0f;
             return Vec3<float>.genVector(1.0f) * (1.0f - t) + Vec3<float>.genVector(0.5f, 0.7f, 1.0f) * t;
         }
+        public static float nextFloat(float min, float max){
+            System.Random random = new System.Random();
+            double val = (random.NextDouble() * (max - min) + min);
+            return (float)val;
+        }
 
+        public static float randomFloat() {
+            return nextFloat(0.0f,1.0f);
+        }
+
+        public static Vec3<float> SphereRandom() {
+            Vec3<float> p;
+            do {
+                p = Vec3<float>.genVector(randomFloat(), randomFloat(), randomFloat()) * 2.0f -
+                Vec3<float>.genVector(1);
+            }while(Math.Pow(p.length(),2) > 1.0f);
+            return p;
+        }
+
+        static float clamp(float x, float min, float max) {
+            if (x < min) return min;
+            if (x > max) return max;
+            return x;
+        }
         static void Main(string[] args)
         {
-            int nx = 200;
-            int ny = 100;
+            //const float aspectRatio = 16.0f / 9.0f;
+            const int nx = 200;
+            const int ny = /*(int)(nx / aspectRatio)*/ 100;
+            const int samplesPerPixel = 100;
+
             StringBuilder output = new();
             output.AppendLine($"P3\n{nx} {ny}\n255\n");
 
@@ -35,19 +63,26 @@ namespace raytracing
             hitTableWorld.Add(new Sphere(Vec3<float>.genVector(0.0f, -100.5f, -1.0f), 100.0f));
 
             var cam = Camera<float>.Init();
-            
+
             for (int j = ny - 1; j >= 0; j--)
             {
                 for (int i = 0; i < nx; i++)
                 {
-                    float u = (float)i / (float)nx;
-                    float v = (float)j / (float)ny;
-                    Ray<float> r = cam.GetRay(u,v);
-                    
-                    Vec3<float> col = color(r, hitTableWorld);
-                    int ir = (int)(255.99 * col.r);
-                    int ig = (int)(255.99 * col.g);
-                    int ib = (int)(255.99 * col.b);
+                    var col = Vec3<float>.genVector(0.0f);
+                    for (int s = 0; s < samplesPerPixel; ++s) {
+                        //float u = (float)(i + randomFloat()) / (float)nx - 1;
+                        //float v = (float)(j + randomFloat()) / (float)ny - 1;
+                        float u = (float)i / (float)nx;
+                        float v = (float)j / (float)ny;
+                        Ray<float> r = cam.GetRay(u,v);
+                        col += color(r, hitTableWorld);
+                    }
+                    col /= samplesPerPixel;
+                    col = Vec3<float>.genVector((float)Math.Sqrt(col.r), (float)Math.Sqrt(col.g), (float)Math.Sqrt(col.b));
+                    float scale = /*1.0f / samplesPerPixel*/ 1.0f;
+                    int ir = (int)(255.99 * clamp(col.r, 0.0f, 0.999f) * scale);
+                    int ig = (int)(255.99 * clamp(col.g, 0.0f, 0.999f) * scale);
+                    int ib = (int)(255.99 * clamp(col.b, 0.0f, 0.999f) * scale);
                     output.AppendLine($"{ir} {ig} {ib}\n");
                 }
             }
