@@ -16,8 +16,8 @@ namespace raytracing
             HitRecord<float> rec = default;
             if(world.Hit(r,0.0f,float.MaxValue, ref rec)) {
                 //return (rec.Normal + 1.0f) * 0.5f;
-                 Vec3<float> target = rec.P + rec.Normal + SphereRandom();
-                 return color(new Ray<float>(rec.P, target - rec.P), world) * 0.5f;
+                Vec3<float> target = rec.P + rec.Normal + SphereRandom();
+                return color(new Ray<float>(rec.P, target - rec.P), world) * 0.5f;
             }
 
             Vec3<float> unitDirection = r.direction().unitVector();
@@ -50,9 +50,8 @@ namespace raytracing
         }
         static void Main(string[] args)
         {
-            //const float aspectRatio = 16.0f / 9.0f;
             const int nx = 200;
-            const int ny = /*(int)(nx / aspectRatio)*/ 100;
+            const int ny = 100;
             const int samplesPerPixel = 100;
 
             StringBuilder output = new();
@@ -70,8 +69,6 @@ namespace raytracing
                 {
                     var col = Vec3<float>.genVector(0.0f);
                     for (int s = 0; s < samplesPerPixel; ++s) {
-                        //float u = (float)(i + randomFloat()) / (float)nx - 1;
-                        //float v = (float)(j + randomFloat()) / (float)ny - 1;
                         float u = (float)i / (float)nx;
                         float v = (float)j / (float)ny;
                         Ray<float> r = cam.GetRay(u,v);
@@ -79,10 +76,9 @@ namespace raytracing
                     }
                     col /= samplesPerPixel;
                     col = Vec3<float>.genVector((float)Math.Sqrt(col.r), (float)Math.Sqrt(col.g), (float)Math.Sqrt(col.b));
-                    float scale = /*1.0f / samplesPerPixel*/ 1.0f;
-                    int ir = (int)(255.99 * clamp(col.r, 0.0f, 0.999f) * scale);
-                    int ig = (int)(255.99 * clamp(col.g, 0.0f, 0.999f) * scale);
-                    int ib = (int)(255.99 * clamp(col.b, 0.0f, 0.999f) * scale);
+                    int ir = (int)(255.99 * clamp(col.r, 0.0f, 0.999f));
+                    int ig = (int)(255.99 * clamp(col.g, 0.0f, 0.999f));
+                    int ib = (int)(255.99 * clamp(col.b, 0.0f, 0.999f));
                     output.AppendLine($"{ir} {ig} {ib}\n");
                 }
             }

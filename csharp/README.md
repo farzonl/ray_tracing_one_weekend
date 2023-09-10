@@ -2,6 +2,8 @@
 # Raytracing in C#
 
 ![](pics/result.png)
+![](pics/result2.png)
+![](pics/versions.png)
 
 ### Dot Net Build Project 
 ```powershell
