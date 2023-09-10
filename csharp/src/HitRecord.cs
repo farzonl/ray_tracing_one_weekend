@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
 
-namespace raytracing
+namespace raytracing.DataStructures
 {
-    namespace DataStructures
+    public struct HitRecord<V> where V : INumber<V>
     {
-        public struct HitRecord
-        {
-            public float T { get; set; }
-            public Vec3<float> P { get; set; }
-            public Vec3<float> Normal { get; set; }
-        }
+        public V T { get; set; }
+        public Vec3<V> P { get; set; }
+        public Vec3<V> Normal { get; set; }
     }
 }

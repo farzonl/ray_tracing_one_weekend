@@ -105,6 +105,9 @@ namespace raytracing
 
             public static Vec3<T> operator +(Vec3<T> a, Vec3<T> b)
                 => new Vec3<T>(a.x + b.x, +a.y + b.y, a.z + b.z);
+            
+            public static Vec3<T> operator +(Vec3<T> a, T b)
+                => new Vec3<T>(a.x + b, +a.y + b, a.z + b);
 
             public static Vec3<T> operator -(Vec3<T> a, Vec3<T> b)
                 => a + (-b);

@@ -5,13 +5,10 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace raytracing
+namespace raytracing.DataStructures
 {
-    namespace DataStructures
+    public abstract class HitTable<T> where T : INumber<T>
     {
-        public abstract class HitTable<T> where T : INumber<T>
-        {
-            public abstract bool Hit(Ray<T> r, float tMin, float tMax, ref HitRecord rec);
-        }
+        public abstract bool Hit(Ray<T> r, T tMin, T tMax, ref HitRecord<T> rec);
     }
 }
